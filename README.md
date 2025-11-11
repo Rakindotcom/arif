@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# আরিফুল ইসলাম - ইসলামিক পোর্টফোলিও ও ব্লগ ওয়েবসাইট
 
-## Getting Started
+একটি সুন্দর, আধুনিক এবং সম্পূর্ণ বাংলা ভাষায় তৈরি ইসলামিক পোর্টফোলিও ও ব্লগ ওয়েবসাইট। লেখক, মার্কেটিং সাইকোলজি বিশেষজ্ঞ এবং নিড (Need) এর সহ-প্রতিষ্ঠাতা আরিফুল ইসলামের অফিশিয়াল ওয়েবসাইট।
 
-First, run the development server:
+## বৈশিষ্ট্য
+
+- ✅ সম্পূর্ণ বাংলা ভাষায় (Baloo Da 2 ফন্ট)
+- ✅ ইসলামিক থিম ও ডিজাইন
+- ✅ রেসপন্সিভ ডিজাইন (মোবাইল, ট্যাবলেট, ডেস্কটপ)
+- ✅ ডার্ক মোড সাপোর্ট
+- ✅ দ্রুত লোডিং (Next.js 16)
+- ✅ SEO অপটিমাইজড
+- ✅ সুন্দর ইসলামিক প্যাটার্ন ও গ্রেডিয়েন্ট
+- ✅ নিড (Need) সংগঠনের তথ্য সংযুক্ত
+
+## পেজসমূহ
+
+1. **প্রচ্ছদ (Home)** - হিরো সেকশন, পরিসংখ্যান, বই সেকশন, সাম্প্রতিক লেখা, নিড সেকশন
+2. **পরিচিতি (About)** - ব্যক্তিগত তথ্য, দক্ষতা, অর্জন, বই, নিড বিস্তারিত
+3. **বই সমূহ (Books)** - উত্তরসূরি (বেস্টসেলার), তারা ঝলমল, কোটিপতি সাহাবি, সব বই, পাঠকদের রিভিউ
+4. **ব্লগ (Blog)** - সব লেখা, ক্যাটাগরি ফিল্টার
+5. **যোগাযোগ (Contact)** - যোগাযোগ ফর্ম, সোশ্যাল লিংক
+
+## ইনস্টলেশন
 
 ```bash
+# ডিপেন্ডেন্সি ইনস্টল করুন
+npm install
+
+# ডেভেলপমেন্ট সার্ভার চালু করুন
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# ব্রাউজারে খুলুন
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## বিল্ড ও ডিপ্লয়
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+# প্রোডাকশন বিল্ড তৈরি করুন
+npm run build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# প্রোডাকশন সার্ভার চালু করুন
+npm start
+```
 
-## Learn More
+## প্রযুক্তি
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 16** - React ফ্রেমওয়ার্ক
+- **Tailwind CSS 4** - স্টাইলিং
+- **Baloo Da 2** - বাংলা ফন্ট (Google Fonts)
+- **React 19** - UI লাইব্রেরি
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## বিশেষ বৈশিষ্ট্য
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### প্রকাশিত বই (১১+)
+আরিফুল ইসলামের লেখা বই সমূহ:
 
-## Deploy on Vercel
+**বেস্টসেলার:**
+- **উত্তরসূরি (Uttorshuri)** - ইসলামিক উপন্যাস (৪.৯/৫)
+  - ২৬২ পৃষ্ঠা, ওয়াফি পাবলিকেশন, ২০২৩, ISBN: 9789849612551
+  - মূল্য: ২৮৬ ৳ (৩০% ছাড়)
+- **তারা ঝলমল (Tara Jholmol)** - #৮ বেস্টসেলার সাহাবীদের জীবনী (৫.০/৫)
+  - ১৯২ পৃষ্ঠা, ওয়াফি পাবলিকেশন, ২০২৩
+  - মূল্য: ২৪০ ৳ (২৫% ছাড়)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**অন্যান্য বই:**
+- **কোটিপতি সাহাবি** - ধনী সাহাবীদের জীবনী (৪.৭/৫)
+- **ওপারেতে সর্বসুখ** - জান্নাতের বর্ণনা (৪.৩/৫)
+- **প্রদীপ্ত কুটির** - ইসলামিক বিবাহ গল্প (৫.০/৫, ১৮ রিভিউ)
+- **খোঁপার বাঁধন** - প্রদীপ্ত কুটির সিক্যুয়েল (৫.০/৫)
+- **চার তারা** - চার ইমামের জীবনী (৫.০/৫)
+- **পুণ্যবতী** - মহীয়সী নারীদের জীবনী (৫.০/৫)
+- **আর্গুমেন্টস অব আরজু** - নাস্তিকতার বিরুদ্ধে যুক্তি (৫.০/৫)
+- **ইসলামিক জ্ঞানের ১০০টি বই** - বই সুপারিশ সংকলন
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### নিড (Need) সংগঠন
+ওয়েবসাইটে নিড (Need) সম্পর্কে বিস্তারিত তথ্য রয়েছে:
+- ৯৩,০০০+ ফলোয়ার সহ সম্পর্ক ও বিবাহ শিক্ষা প্ল্যাটফর্ম
+- রেকর্ডেড কোর্স এবং PDF গাইড
+- দাম্পত্য পরামর্শ ও তালাক প্রতিরোধ সেবা
+- Facebook: [@Needconnectivity](https://www.facebook.com/Needconnectivity)
+- যোগাযোগ: +880 1951-433164
+
+## কাস্টমাইজেশন
+
+### রঙ পরিবর্তন
+
+`src/app/globals.css` ফাইলে CSS ভেরিয়েবল পরিবর্তন করুন:
+
+```css
+:root {
+  --primary: #2d5f3f;    /* প্রাথমিক রঙ */
+  --secondary: #d4af37;  /* সেকেন্ডারি রঙ */
+  --accent: #8b4513;     /* অ্যাকসেন্ট রঙ */
+}
+```
+
+### কন্টেন্ট আপডেট
+
+- **হোম পেজ**: `src/app/page.js`
+- **পরিচিতি**: `src/app/about/page.js`
+- **ব্লগ**: `src/app/blog/page.js`
+- **পোর্টফোলিও**: `src/app/portfolio/page.js`
+- **যোগাযোগ**: `src/app/contact/page.js`
+
+### সোশ্যাল লিংক
+
+`src/components/Footer.js` ফাইলে Facebook লিংক আপডেট করুন।
+
+## ডিপ্লয়মেন্ট
+
+### Vercel (সুপারিশকৃত)
+
+1. GitHub এ কোড পুশ করুন
+2. [Vercel](https://vercel.com) এ সাইন ইন করুন
+3. রিপোজিটরি ইমপোর্ট করুন
+4. ডিপ্লয় করুন
+
+### অন্যান্য প্ল্যাটফর্ম
+
+- Netlify
+- AWS Amplify
+- DigitalOcean App Platform
+
+## লাইসেন্স
+
+© ২০২৫ আরিফুল ইসলাম। সর্বস্বত্ব সংরক্ষিত।
+
+## সাপোর্ট
+
+প্রশ্ন বা সাহায্যের জন্য যোগাযোগ করুন:
+- Facebook: [@Ariful.islamDUBD](https://www.facebook.com/Ariful.islamDUBD)
