@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BookCarousel from '@/components/BookCarousel';
 import { books } from '@/data/books';
 
 export const metadata = {
@@ -127,6 +128,16 @@ export default function Books() {
             </div>
           </section>
         )}
+
+        {/* Featured Books Carousel */}
+        <section className="py-20 bg-white dark:bg-gray-900">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-8">বিশেষ বই সমূহ</h2>
+              <BookCarousel books={books.filter(b => b.featured)} />
+            </div>
+          </div>
+        </section>
 
         {/* All Books */}
         <section className="py-20 bg-gray-50 dark:bg-gray-900">

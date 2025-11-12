@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useFirebase } from '@/contexts/FirebaseContext';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -10,11 +13,38 @@ export default function Contact() {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const { user } = useFirebase();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setLoading(true);
+    setError('');
+    setSuccess(false);
+
+    try {
+      // Save to Firebase
+      await addDoc(collection(db, 'contacts'), {
+        ...formData,
+        userId: user?.uid || null,
+        userEmail: user?.email || formData.email,
+        createdAt: serverTimestamp(),
+        status: 'new'
+      });
+
+      setSuccess(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => setSuccess(false), 5000);
+    } catch (err) {
+      console.error('Error saving contact:', err);
+      setError('বার্তা পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -48,6 +78,19 @@ export default function Contact() {
                 {/* Contact Form */}
                 <div>
                   <h2 className="text-2xl font-bold mb-6">বার্তা পাঠান</h2>
+                  
+                  {success && (
+                    <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-600 dark:text-green-400 mb-6">
+                      ধন্যবাদ! আপনার বার্তা সফলভাবে পাঠানো হয়েছে।
+                    </div>
+                  )}
+
+                  {error && (
+                    <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 mb-6">
+                      {error}
+                    </div>
+                  )}
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -60,7 +103,8 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800"
+                        disabled={loading}
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 disabled:opacity-50"
                         placeholder="আপনার নাম লিখুন"
                       />
                     </div>
@@ -76,7 +120,8 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800"
+                        disabled={loading}
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 disabled:opacity-50"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -92,7 +137,8 @@ export default function Contact() {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800"
+                        disabled={loading}
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 disabled:opacity-50"
                         placeholder="বার্তার বিষয়"
                       />
                     </div>
@@ -107,17 +153,19 @@ export default function Contact() {
                         value={formData.message}
                         onChange={handleChange}
                         required
+                        disabled={loading}
                         rows={6}
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 resize-none disabled:opacity-50"
                         placeholder="আপনার বার্তা লিখুন..."
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full px-8 py-4 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
+                      disabled={loading}
+                      className="w-full px-8 py-4 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      বার্তা পাঠান
+                      {loading ? 'পাঠানো হচ্ছে...' : 'বার্তা পাঠান'}
                     </button>
                   </form>
                 </div>

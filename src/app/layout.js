@@ -1,5 +1,6 @@
 import { Anek_Bangla } from "next/font/google";
 import "./globals.css";
+import { FirebaseProvider } from "@/contexts/FirebaseContext";
 
 const anekBangla = Anek_Bangla({
   variable: "--font-bengali",
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="bn" dir="ltr">
       <body className={`${anekBangla.variable} antialiased`}>
-        {children}
+        <FirebaseProvider>
+          {children}
+        </FirebaseProvider>
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BookCarousel from '@/components/BookCarousel';
+import { getFeaturedBooks } from '@/data/books';
 
 export default function Home() {
   const featuredPosts = [
@@ -8,6 +10,8 @@ export default function Home() {
     { id: 2, title: 'ইহুদি চিকিৎসক যিনি সালাহউদ্দিন আইয়ুবীর চিকিৎসা করেছিলেন', category: 'ইসলামিক ইতিহাস' },
     { id: 3, title: 'উসমান ইবনে আফফান: কষ্টের মধ্যে উদারতা', category: 'সাহাবীদের জীবনী' }
   ];
+
+  const featuredBooks = getFeaturedBooks();
 
   return (
     <>
@@ -30,7 +34,7 @@ export default function Home() {
                 মার্কেটিং সাইকোলজি বিশেষজ্ঞ • লেখক • উদ্যোক্তা
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                নিড (Need) কোর্স প্ল্যাটফর্মের সহ-প্রতিষ্ঠাতা | ঢাকা বিশ্ববিদ্যালয়
+                নিড (Need) কোর্স প্ল্যাটফর্মের সহ-প্রতিষ্ঠাতা
               </p>
               <div className="flex flex-wrap gap-3 justify-center">
                 <Link href="/books" className="px-6 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-all shadow-md text-sm">
@@ -81,8 +85,12 @@ export default function Home() {
               <p className="text-sm text-gray-600 dark:text-gray-400">ইসলামিক উপন্যাস ও সাহাবীদের জীবনী</p>
             </div>
             
+            <div className="max-w-6xl mx-auto mb-8">
+              <BookCarousel books={featuredBooks} />
+            </div>
+
             <div className="max-w-5xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="grid md:grid-cols-2 gap-6 mb-6 hidden">
                 <div className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 border-2 border-primary/20">
                   <div className="flex gap-4">
                     <div className="w-20 h-28 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
@@ -138,7 +146,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
                   'কোটিপতি সাহাবি',
                   'চার তারা',
@@ -146,11 +154,10 @@ export default function Home() {
                   'প্রদীপ্ত কুটির',
                   'খোঁপার বাঁধন',
                   'পুণ্যবতী',
-                  'আর্গুমেন্টস অব আরজু',
-                  '১০০টি বই'
+                  'আর্গুমেন্টস অব আরজু'
                 ].map((book, i) => (
-                  <div key={i} className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow text-center border border-gray-200 dark:border-gray-700">
-                    <h4 className="font-bold text-xs leading-tight">{book}</h4>
+                  <div key={i} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center border border-gray-200 dark:border-gray-700 hover:border-primary transition-colors">
+                    <h4 className="font-bold text-sm leading-tight">{book}</h4>
                   </div>
                 ))}
               </div>
@@ -200,7 +207,7 @@ export default function Home() {
               <div className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 md:p-8 border-2 border-primary/20">
                 <div className="text-center mb-6">
                   <h2 className="text-2xl md:text-3xl font-bold mb-2">নিড (Need)</h2>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">সম্পর্ক ও বিবাহ শিক্ষা কোর্স প্ল্যাটফর্ম</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">অনলাইন শিক্ষা কোর্স প্ল্যাটফর্ম</p>
                 </div>
                 
                 <div className="grid md:grid-cols-3 gap-4 mb-6">
@@ -221,8 +228,8 @@ export default function Home() {
                 <div className="grid md:grid-cols-3 gap-3 mb-6">
                   {[
                     'অনলাইন কোর্স',
-                    'বিবাহ প্রস্তুতি কোর্স',
-                    'দাম্পত্য জীবন কোর্স'
+                    'রেকর্ডেড ক্লাস',
+                    'PDF গাইড'
                   ].map((service, i) => (
                     <div key={i} className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-primary/20">
                       <div className="text-sm font-bold">{service}</div>
