@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-gray-900 to-black text-gray-300 mt-12 border-t-4 border-primary">
-      <div className="bg-gradient-to-r from-primary to-secondary h-1"></div>
+    <footer className="bg-linear-to-b from-gray-900 to-black text-gray-300 mt-12 border-t-4 border-primary">
+      <div className="bg-linear-to-r from-primary to-secondary h-1"></div>
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-6 mb-6">
           <div>
@@ -9,7 +9,7 @@ export default function Footer() {
               আরিফুল ইসলাম
             </h3>
             <p className="text-sm leading-relaxed">
-              মার্কেটিং সাইকোলজি বিশেষজ্ঞ, লেখক ও নিড (Need) কোর্স প্ল্যাটফর্মের সহ-প্রতিষ্ঠাতা। 
+              মার্কেটিং সাইকোলজি বিশেষজ্ঞ, লেখক ও নিড (Need) এর সহ-প্রতিষ্ঠাতা। 
               ইসলামিক জ্ঞান ও ব্যক্তিগত উন্নয়নে নিবেদিত।
             </p>
           </div>

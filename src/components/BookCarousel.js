@@ -42,10 +42,10 @@ export default function BookCarousel({ books }) {
         >
           {books.map((book, index) => (
             <div key={index} className="min-w-full">
-              <div className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 md:p-8 border-2 border-primary/20">
-                <div className="flex flex-col md:flex-row gap-6 items-center">
+              <div className="bg-linear-to-br from-primary/10 to-secondary/10 rounded-xl p-6 md:p-8 border-2 border-primary/20 h-[580px] md:h-[450px]">
+                <div className="flex flex-col md:flex-row gap-6 items-center h-full justify-center">
                   {/* Book Cover */}
-                  <div className="w-48 h-64 md:w-56 md:h-80 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0 shadow-2xl relative overflow-hidden">
+                  <div className="w-48 h-64 md:w-56 md:h-80 bg-linear-to-br from-primary to-secondary rounded-lg flex items-center justify-center shrink-0 shadow-2xl relative overflow-hidden">
                     {book.cover ? (
                       <Image 
                         src={book.cover} 
@@ -108,7 +108,7 @@ export default function BookCarousel({ books }) {
 
                     <Link 
                       href="/books" 
-                      className="inline-block px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium hover:opacity-90 transition-all shadow-lg"
+                      className="inline-block px-6 py-3 bg-linear-to-r from-primary to-secondary text-white rounded-lg font-medium hover:opacity-90 transition-all shadow-lg"
                     >
                       বিস্তারিত দেখুন
                     </Link>
