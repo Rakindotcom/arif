@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BookCarousel from '@/components/BookCarousel';
@@ -18,116 +19,36 @@ export default function Books() {
         {/* Hero */}
         <section className="py-20 bg-gradient-to-br from-primary/10 to-secondary/10">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-4xl mx-auto text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">আমার বই সমূহ</h1>
               <p className="text-xl text-gray-700 dark:text-gray-300">
                 ইসলামিক উপন্যাস, সাহাবীদের জীবনী এবং জ্ঞানের সংকলন
               </p>
             </div>
-          </div>
-        </section>
 
-        {/* Featured Book - Uttorshuri */}
-        {featuredBook && (
-          <section className="py-20">
-            <div className="container mx-auto px-4">
-              <div className="max-w-6xl mx-auto">
-                <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-3xl overflow-hidden shadow-2xl">
-                  <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
-                    {/* Book Cover */}
-                    <div className="flex items-center justify-center">
-                      <div className="relative">
-                        <div className="w-full max-w-sm aspect-[3/4] bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-2xl flex items-center justify-center">
-                          <div className="text-white text-center p-8">
-                            <svg className="w-24 h-24 mx-auto mb-6" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
-                            </svg>
-                            <h3 className="text-3xl font-bold mb-2">{featuredBook.title}</h3>
-                            <p className="text-xl opacity-90">{featuredBook.titleEnglish}</p>
-                          </div>
-                        </div>
-                        <div className="absolute -top-4 -right-4 bg-secondary text-white px-4 py-2 rounded-full font-bold shadow-lg">
-                          বেস্টসেলার
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Book Details */}
-                    <div className="flex flex-col justify-center">
-                      <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4 w-fit">
-                        {featuredBook.category}
-                      </div>
-                      <h2 className="text-3xl md:text-4xl font-bold mb-4">{featuredBook.title}</h2>
-                      <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                        {featuredBook.description}
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl">
-                          <div className="text-sm text-gray-600 dark:text-gray-400">প্রকাশক</div>
-                          <div className="font-bold">{featuredBook.publisher}</div>
-                        </div>
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl">
-                          <div className="text-sm text-gray-600 dark:text-gray-400">প্রকাশ</div>
-                          <div className="font-bold">{featuredBook.year}</div>
-                        </div>
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl">
-                          <div className="text-sm text-gray-600 dark:text-gray-400">পৃষ্ঠা</div>
-                          <div className="font-bold">{featuredBook.pages}</div>
-                        </div>
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl">
-                          <div className="text-sm text-gray-600 dark:text-gray-400">রেটিং</div>
-                          <div className="font-bold flex items-center gap-1">
-                            <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                            {featuredBook.rating}/5
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mb-6">
-                        <h4 className="font-bold mb-3">বইয়ের বৈশিষ্ট্য:</h4>
-                        <ul className="space-y-2">
-                          {featuredBook.highlights.map((highlight, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <span className="text-primary mt-1">✓</span>
-                              <span>{highlight}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="flex items-center gap-4 mb-6">
-                        <div>
-                          <div className="text-3xl font-bold text-primary">{featuredBook.price} ৳</div>
-                          <div className="text-sm text-gray-500 line-through">{featuredBook.originalPrice} ৳</div>
-                        </div>
-                        <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-bold">
-                          {Math.round((1 - featuredBook.price / featuredBook.originalPrice) * 100)}% ছাড়
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-3">
-                        {featuredBook.buyLinks.map((link, index) => (
-                          <a
-                            key={index}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg"
-                          >
-                            {link.store} থেকে কিনুন
-                          </a>
-                        ))}
-                      </div>
-                    </div>
+            {/* Author Bio Card */}
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 border-2 border-primary/20">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 relative rounded-full overflow-hidden flex-shrink-0 shadow-lg">
+                    <Image
+                      src="/logo.webp"
+                      alt="আরিফুল ইসলাম"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-3 text-primary">লেখক পরিচিতি</h3>
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-justify">
+                      আরিফুল ইসলাম, ডাকনাম আরিফ, ঢাকা বিশ্ববিদ্যালয়ে অধ্যয়ন করেছেন। লেখার চেয়ে পড়তে বেশি ভালোবাসেন এবং পড়ার নির্যাসটুকু লেখার মাধ্যমে তুলে ধরেন। তাঁর এই প্রচেষ্টার ফলস্বরূপ এ পর্যন্ত তিনটি বই প্রকাশিত হয়েছে। সমকালীন প্রকাশন থেকে প্রকাশিত 'আর্গুমেন্টস অব আরজু' এবং সমর্পণ প্রকাশন থেকে প্রকাশিত 'প্রদীপ্ত কুটির' তাঁর প্রকাশিত প্রথম দুটি বই। 'চার তারা' তাঁর তৃতীয় বই। এছাড়াও, তাঁর আরও বই রয়েছে—'ওপারেতে সর্বসুখ', 'তারা ঝলমল', এবং 'খোপার বাঁধন'।
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
         {/* Featured Books Carousel */}
         <section className="py-20 bg-white dark:bg-gray-900">
@@ -147,12 +68,27 @@ export default function Books() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {books.map((book) => (
                   <div key={book.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                      <div className="text-center p-6">
-                        <svg className="w-20 h-20 mx-auto mb-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
-                        </svg>
-                        <h3 className="text-xl font-bold">{book.title}</h3>
+                    <div className="aspect-[3/4] relative">
+                      {book.cover ? (
+                        <Image
+                          src={book.cover}
+                          alt={book.title}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                          <div className="text-center p-6">
+                            <svg className="w-20 h-20 mx-auto mb-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                            </svg>
+                            <h3 className="text-xl font-bold">{book.title}</h3>
+                          </div>
+                        </div>
+                      )}
+                      {/* Book Title Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <h3 className="text-white font-bold text-lg line-clamp-2">{book.title}</h3>
                       </div>
                     </div>
                     <div className="p-6">

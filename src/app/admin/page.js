@@ -16,7 +16,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/');
+      router.push('/admin/login');
     }
   }, [user, loading, router]);
 
@@ -91,8 +91,46 @@ export default function AdminPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold mb-2">যোগাযোগ বার্তা</h1>
-              <p className="text-gray-600 dark:text-gray-400">সব বার্তা দেখুন এবং পরিচালনা করুন</p>
+              <h1 className="text-3xl font-bold mb-2">অ্যাডমিন প্যানেল</h1>
+              <p className="text-gray-600 dark:text-gray-400">ওয়েবসাইট পরিচালনা করুন</p>
+            </div>
+
+            {/* Quick Links */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <a
+                href="/admin/blogs"
+                className="block p-6 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl border-2 border-primary/20 hover:border-primary/40 transition-all"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">ব্লগ ম্যানেজমেন্ট</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">ব্লগ পোস্ট তৈরি ও সম্পাদনা করুন</p>
+                  </div>
+                </div>
+              </a>
+
+              <div className="p-6 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl border-2 border-primary/20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center text-white">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">যোগাযোগ বার্তা</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">নিচে দেখুন</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-4">যোগাযোগ বার্তা</h2>
             </div>
 
             <div className="mb-6 flex gap-2">

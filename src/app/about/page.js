@@ -15,8 +15,8 @@ export default function About() {
   ];
 
   const achievements = [
-    '৯২,০০০+ ব্যক্তিগত পেজ ফলোয়ার',
-    '৯৩,০০০+ নিড (Need) পেজ ফলোয়ার',
+    '১ লক্ষ+ ব্যক্তিগত পেজ ফলোয়ার',
+    '৯৩ হাজার+ নিড (Need) পেজ ফলোয়ার',
     '১১+ প্রকাশিত বই (উত্তরসূরি, তারা ঝলমল, কোটিপতি সাহাবি, প্রদীপ্ত কুটির)',
     '৫০০+ অনুপ্রেরণামূলক পোস্ট',
     '১০০+ বই সুপারিশ তালিকা',
@@ -67,7 +67,7 @@ export default function About() {
                 <p className="text-lg leading-relaxed mb-6">
                   আমি নিড (Need) এর সহ-প্রতিষ্ঠাতা, যা একটি অনলাইন শিক্ষা প্রতিষ্ঠান। 
                   এর মাধ্যমে আমরা রেকর্ডেড ক্লাস এবং PDF গাইড প্রদান করে 
-                  ৯৩,০০০+ মানুষকে জ্ঞান অর্জন এবং ব্যক্তিগত উন্নয়নে সাহায্য করছি।
+                  ৯৩ হাজার+ মানুষকে জ্ঞান অর্জন এবং ব্যক্তিগত উন্নয়নে সাহায্য করছি।
                 </p>
 
                 <p className="text-lg leading-relaxed mb-6">
@@ -187,11 +187,11 @@ export default function About() {
                     </p>
                     <div className="grid grid-cols-3 gap-4 mt-6">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-primary">৯৩,০০০+</div>
+                        <div className="text-2xl font-bold text-primary">৯৩ হাজার+</div>
                         <div className="text-sm text-gray-600 dark:text-gray-400">ফলোয়ার</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-primary">৭৭,০০০+</div>
+                        <div className="text-2xl font-bold text-primary">৭৭ হাজার+</div>
                         <div className="text-sm text-gray-600 dark:text-gray-400">লাইক</div>
                       </div>
                       <div className="text-center">

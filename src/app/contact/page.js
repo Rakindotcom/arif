@@ -206,7 +206,7 @@ export default function Contact() {
                             >
                               @Ariful.islamDUBD
                             </a>
-                            <p className="text-xs text-gray-600 dark:text-gray-400">ব্যক্তিগত পেজ - ৯২,০০০+ ফলোয়ার</p>
+                            <p className="text-xs text-gray-600 dark:text-gray-400">ব্যক্তিগত পেজ - ১ লক্ষ+ ফলোয়ার</p>
                           </div>
                           <div>
                             <a 
@@ -217,7 +217,7 @@ export default function Contact() {
                             >
                               @Needconnectivity
                             </a>
-                            <p className="text-xs text-gray-600 dark:text-gray-400">নিড (Need) - ৯৩,০০০+ ফলোয়ার</p>
+                            <p className="text-xs text-gray-600 dark:text-gray-400">নিড (Need) - ৯৩ হাজার+ ফলোয়ার</p>
                           </div>
                         </div>
                       </div>

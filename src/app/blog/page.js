@@ -1,65 +1,42 @@
+'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 
-export const metadata = {
-  title: 'ব্লগ - আরিফুল ইসলাম',
-  description: 'ইসলামিক ইতিহাস, অনুপ্রেরণা এবং ব্যক্তিগত উন্নয়নের লেখা',
-};
+const categories = ['সব', 'ইসলামিক ইতিহাস', 'সাহাবীদের জীবনী', 'বই সুপারিশ', 'স্বাস্থ্য ও জীবনযাপন', 'উদ্যোক্তা', 'ব্যক্তিগত উন্নয়ন', 'মার্কেটিং'];
 
 export default function Blog() {
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'নাসর ইবনে হাজ্জাজের মদিনা থেকে বসরা অভিযান',
-      excerpt: 'একজন সাহাবীর যাত্রা, যা ইসলামে বিনয় এবং সৌন্দর্যের শিক্ষা দেয়। এই গল্পটি আমাদের শেখায় কিভাবে একজন মুসলিম তার চরিত্র এবং আচরণ দিয়ে সমাজে প্রভাব ফেলতে পারে।',
-      category: 'ইসলামিক ইতিহাস',
-      date: 'নভেম্বর ১০, ২০২৫',
-      readTime: '৫ মিনিট'
-    },
-    {
-      id: 2,
-      title: 'ইহুদি চিকিৎসক যিনি সালাহউদ্দিন আইয়ুবীর চিকিৎসা করেছিলেন',
-      excerpt: 'মাইমোনাইডস সুলতানের সেবা করেছিলেন, সহনশীলতা এবং জ্ঞানের উপর জোর দিয়ে। এই ঐতিহাসিক ঘটনা আমাদের শেখায় ইসলামে জ্ঞান এবং মানবতার মূল্য কতটা গুরুত্বপূর্ণ।',
-      category: 'ইসলামিক ইতিহাস',
-      date: 'সেপ্টেম্বর ১৫, ২০২৫',
-      readTime: '৭ মিনিট'
-    },
-    {
-      id: 3,
-      title: 'উসমান ইবনে আফফান: কষ্টের মধ্যে উদারতা',
-      excerpt: 'খরার সময় সাহায্যের গল্প, সম্পদকে ঐশ্বরিক আমানত হিসেবে দেখানো। হযরত উসমান (রা.) এর জীবন থেকে আমরা শিখি কিভাবে সম্পদ আল্লাহর পথে ব্যয় করতে হয়।',
-      category: 'সাহাবীদের জীবনী',
-      date: 'আগস্ট ২২, ২০২৫',
-      readTime: '৬ মিনিট'
-    },
-    {
-      id: 4,
-      title: 'ইসলামিক জ্ঞানের ১০০টি অপরিহার্য বই',
-      excerpt: 'নতুনদের জন্য অবশ্যপাঠ্য বইয়ের তালিকা, ব্যাখ্যা সহ। এই তালিকায় রয়েছে কুরআন, হাদিস, ফিকহ, সীরাত এবং আধ্যাত্মিকতার উপর গুরুত্বপূর্ণ বই।',
-      category: 'বই সুপারিশ',
-      date: 'জুলাই ৮, ২০২৫',
-      readTime: '১০ মিনিট'
-    },
-    {
-      id: 5,
-      title: 'শীতকালীন স্বাস্থ্য টিপস (শীতল কাল আসার)',
-      excerpt: 'সর্দি-কাশির জন্য মধু-আদার মতো ব্যবহারিক প্রতিকার, ইসলামিক অনুশীলনের সাথে সম্পর্কিত। নবী (সা.) এর সুন্নাহ অনুযায়ী স্বাস্থ্য রক্ষার উপায়।',
-      category: 'স্বাস্থ্য ও জীবনযাপন',
-      date: 'জুন ১২, ২০২৫',
-      readTime: '৪ মিনিট'
-    },
-    {
-      id: 6,
-      title: 'মার্কেটিং সাইকোলজি: নৈতিক ব্যবসায়িক কৌশল',
-      excerpt: 'কিভাবে ইসলামিক মূল্যবোধ বজায় রেখে কার্যকর মার্কেটিং করা যায়। মানুষের আচরণ বুঝে এবং সততার সাথে ব্যবসা পরিচালনার কৌশল।',
-      category: 'উদ্যোক্তা',
-      date: 'মে ২৫, ২০২৫',
-      readTime: '৮ মিনিট'
-    }
-  ];
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('সব');
 
-  const categories = ['সব', 'ইসলামিক ইতিহাস', 'সাহাবীদের জীবনী', 'বই সুপারিশ', 'স্বাস্থ্য ও জীবনযাপন', 'উদ্যোক্তা'];
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = async () => {
+    try {
+      const q = query(collection(db, 'blogs'), orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const blogsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setBlogPosts(blogsData);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredPosts = selectedCategory === 'সব' 
+    ? blogPosts 
+    : blogPosts.filter(post => post.category === selectedCategory);
 
   return (
     <>
@@ -80,11 +57,32 @@ export default function Blog() {
         {/* Categories */}
         <section className="py-8 bg-white dark:bg-gray-900 sticky top-16 z-40 shadow-sm">
           <div className="container mx-auto px-4">
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            {/* Mobile: Dropdown */}
+            <div className="md:hidden">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 font-medium"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Desktop: Buttons */}
+            <div className="hidden md:flex gap-3 justify-center flex-wrap">
               {categories.map((category) => (
                 <button
                   key={category}
-                  className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white rounded-full whitespace-nowrap transition-colors"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white'
+                  }`}
                 >
                   {category}
                 </button>
@@ -96,54 +94,109 @@ export default function Blog() {
         {/* Blog Posts */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid gap-8">
-                {blogPosts.map((post) => (
-                  <article key={post.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <div className="md:flex">
-                      <div className="md:w-1/3 h-64 md:h-auto bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                        <svg className="w-24 h-24 text-primary/30" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+            <div className="max-w-6xl mx-auto">
+              {loading ? (
+                <div className="text-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                  <p>ব্লগ লোড হচ্ছে...</p>
+                </div>
+              ) : filteredPosts.length === 0 ? (
+                <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                  <p className="text-gray-600 dark:text-gray-400">কোন ব্লগ পোস্ট নেই</p>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-3 gap-6">
+                  {filteredPosts.map((post) => {
+                    // Extract first non-empty paragraph as preview
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = post.content;
+                    const paragraphs = tempDiv.querySelectorAll('p');
+                    let preview = 'ব্লগ পোস্ট';
+                    // Find first non-empty paragraph with substantial content
+                    for (const p of paragraphs) {
+                      const text = p.textContent?.trim();
+                      if (text && text.length > 10) {
+                        preview = text;
+                        break;
+                      }
+                    }
+                    
+                    return (
+                      <article key={post.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                        <div className="p-6">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-medium">
+                              {post.category}
+                            </span>
+                            <span className="text-xs text-gray-500">{post.readTime}</span>
+                          </div>
+                          <h2 className="text-lg font-bold mb-4 line-clamp-3 hover:text-primary transition-colors">
+                            {preview}
+                          </h2>
+                          <button 
+                        onClick={() => setSelectedPost(post)}
+                        className="text-primary font-medium hover:text-secondary transition-colors inline-flex items-center gap-2 text-sm"
+                      >
+                        সম্পূর্ণ পড়ুন
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
                         </svg>
-                      </div>
-                      <div className="md:w-2/3 p-8">
-                        <div className="flex items-center gap-3 mb-4">
-                          <span className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">
-                            {post.category}
-                          </span>
-                          <span className="text-sm text-gray-500">{post.date}</span>
-                          <span className="text-sm text-gray-500">• {post.readTime}</span>
+                      </button>
                         </div>
-                        <h2 className="text-2xl font-bold mb-3 hover:text-primary transition-colors">
-                          <Link href={`/blog/${post.id}`}>{post.title}</Link>
-                        </h2>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                          {post.excerpt}
-                        </p>
-                        <Link 
-                          href={`/blog/${post.id}`}
-                          className="text-primary font-medium hover:text-secondary transition-colors inline-flex items-center gap-2"
-                        >
-                          সম্পূর্ণ পড়ুন
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
-                          </svg>
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-              {/* Pagination */}
-              <div className="flex justify-center gap-2 mt-12">
-                <button className="px-4 py-2 bg-primary text-white rounded-lg font-medium">1</button>
-                <button className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-primary hover:text-white transition-colors">2</button>
-                <button className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-primary hover:text-white transition-colors">3</button>
-              </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </section>
+
+        {/* Modal */}
+        {selectedPost && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setSelectedPost(null)}>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              {/* Close Button */}
+              <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 flex justify-end items-center">
+                <button 
+                  onClick={() => setSelectedPost(null)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-8">
+                <div 
+                  className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300"
+                  dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+                />
+
+                {/* Share */}
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                  <h3 className="text-lg font-semibold mb-4">শেয়ার করুন</h3>
+                  <div className="flex gap-3">
+                    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                      Facebook
+                    </button>
+                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+                      WhatsApp
+                    </button>
+                    <button className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm">
+                      Copy Link
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </>

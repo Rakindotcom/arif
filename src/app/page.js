@@ -1,18 +1,38 @@
+'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BookCarousel from '@/components/BookCarousel';
 import { getFeaturedBooks } from '@/data/books';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 
 export default function Home() {
-  const featuredPosts = [
-    { id: 1, title: 'নাসর ইবনে হাজ্জাজের মদিনা থেকে বসরা অভিযান', category: 'ইসলামিক ইতিহাস' },
-    { id: 2, title: 'ইহুদি চিকিৎসক যিনি সালাহউদ্দিন আইয়ুবীর চিকিৎসা করেছিলেন', category: 'ইসলামিক ইতিহাস' },
-    { id: 3, title: 'উসমান ইবনে আফফান: কষ্টের মধ্যে উদারতা', category: 'সাহাবীদের জীবনী' }
-  ];
-
+  const [featuredPosts, setFeaturedPosts] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
   const featuredBooks = getFeaturedBooks();
+
+  useEffect(() => {
+    fetchRecentBlogs();
+  }, []);
+
+  const fetchRecentBlogs = async () => {
+    try {
+      const q = query(collection(db, 'blogs'), orderBy('createdAt', 'desc'), limit(3));
+      const querySnapshot = await getDocs(q);
+      const blogsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setFeaturedPosts(blogsData);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    } finally {
+      setLoadingPosts(false);
+    }
+  };
 
   return (
     <>
@@ -71,7 +91,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-4 gap-4 text-center max-w-3xl mx-auto">
               <div>
-                <div className="text-2xl md:text-3xl font-bold mb-1">৯২K+</div>
+                <div className="text-2xl md:text-3xl font-bold mb-1">১ লক্ষ+</div>
                 <div className="text-xs opacity-90">ফলোয়ার</div>
               </div>
               <div>
@@ -108,10 +128,13 @@ export default function Home() {
               <div className="hidden md:grid md:grid-cols-2 gap-6 mb-6">
                 <div className="bg-linear-to-br from-primary/10 to-secondary/10 rounded-xl p-6 border-2 border-primary/20">
                   <div className="flex gap-4">
-                    <div className="w-20 h-28 bg-linear-to-br from-primary to-secondary rounded-lg flex items-center justify-center shrink-0 shadow-lg">
-                      <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
-                      </svg>
+                    <div className="w-20 h-28 relative rounded-lg overflow-hidden shrink-0 shadow-lg">
+                      <Image
+                        src="/105.jpg"
+                        alt="উত্তরসূরি"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="flex-1">
                       <div className="inline-block px-2 py-0.5 bg-red-100 text-red-600 rounded text-xs font-bold mb-2">বেস্টসেলার</div>
@@ -135,10 +158,13 @@ export default function Home() {
 
                 <div className="bg-linear-to-br from-primary/10 to-secondary/10 rounded-xl p-6 border-2 border-primary/20">
                   <div className="flex gap-4">
-                    <div className="w-20 h-28 bg-linear-to-br from-islamic-green to-secondary rounded-lg flex items-center justify-center shrink-0 shadow-lg">
-                      <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                      </svg>
+                    <div className="w-20 h-28 relative rounded-lg overflow-hidden shrink-0 shadow-lg">
+                      <Image
+                        src="/tara jholmol.jpg"
+                        alt="তারা ঝলমল"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="flex-1">
                       <div className="inline-block px-2 py-0.5 bg-green-100 text-green-600 rounded text-xs font-bold mb-2">#৮ বেস্টসেলার</div>
@@ -195,17 +221,45 @@ export default function Home() {
               </h2>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-              {featuredPosts.map((post) => (
-                <Link key={post.id} href={`/blog/${post.id}`} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded">{post.category}</span>
-                  </div>
-                  <h3 className="font-bold text-sm mb-2 line-clamp-2">{post.title}</h3>
-                  <span className="text-xs text-primary font-medium">পড়ুন →</span>
-                </Link>
-              ))}
-            </div>
+            {loadingPosts ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+              </div>
+            ) : featuredPosts.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <p>কোন ব্লগ পোস্ট নেই</p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+                {featuredPosts.map((post) => {
+                  // Extract first non-empty paragraph as preview
+                  const tempDiv = typeof document !== 'undefined' ? document.createElement('div') : null;
+                  let preview = 'ব্লগ পোস্ট';
+                  if (tempDiv && post.content) {
+                    tempDiv.innerHTML = post.content;
+                    const paragraphs = tempDiv.querySelectorAll('p');
+                    // Find first non-empty paragraph
+                    for (const p of paragraphs) {
+                      const text = p.textContent?.trim();
+                      if (text && text.length > 10) {
+                        preview = text;
+                        break;
+                      }
+                    }
+                  }
+                  
+                  return (
+                    <div key={post.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow p-4 border border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded">{post.category}</span>
+                      </div>
+                      <h3 className="font-bold text-sm mb-2 line-clamp-2">{preview}</h3>
+                      <Link href="/blog" className="text-xs text-primary font-medium hover:text-secondary">পড়ুন →</Link>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             <div className="text-center mt-6">
               <Link href="/blog" className="inline-block px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-all text-sm">
