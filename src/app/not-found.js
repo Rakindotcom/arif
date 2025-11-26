@@ -6,12 +6,12 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5">
+      <main className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-2xl mx-auto text-center">
             <div className="mb-8">
               <div className="text-8xl md:text-9xl font-bold text-primary/20 mb-4">৪০৪</div>
-              <div className="w-32 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-6"></div>
+              <div className="w-32 h-1 bg-linear-to-r from-primary to-secondary mx-auto mb-6"></div>
             </div>
             
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">

@@ -43,7 +43,7 @@ export default function Blog() {
       <Header />
       <main className="min-h-screen">
         {/* Hero */}
-        <section className="py-20 bg-gradient-to-br from-primary/10 to-secondary/10">
+        <section className="py-20 bg-linear-to-br from-primary/10 to-secondary/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">ব্লগ</h1>

@@ -99,7 +99,7 @@ export default function AdminPage() {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <a
                 href="/admin/blogs"
-                className="block p-6 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl border-2 border-primary/20 hover:border-primary/40 transition-all"
+                className="block p-6 bg-linear-to-br from-primary/10 to-secondary/10 rounded-xl border-2 border-primary/20 hover:border-primary/40 transition-all"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
@@ -114,7 +114,7 @@ export default function AdminPage() {
                 </div>
               </a>
 
-              <div className="p-6 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl border-2 border-primary/20">
+              <div className="p-6 bg-linear-to-br from-primary/10 to-secondary/10 rounded-xl border-2 border-primary/20">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center text-white">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

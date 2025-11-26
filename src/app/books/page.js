@@ -17,7 +17,7 @@ export default function Books() {
       <Header />
       <main className="min-h-screen">
         {/* Hero */}
-        <section className="py-20 bg-gradient-to-br from-primary/10 to-secondary/10">
+        <section className="py-20 bg-linear-to-br from-primary/10 to-secondary/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">আমার বই সমূহ</h1>
@@ -30,7 +30,7 @@ export default function Books() {
             <div className="max-w-4xl mx-auto">
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 border-2 border-primary/20">
                 <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 relative rounded-full overflow-hidden flex-shrink-0 shadow-lg">
+                  <div className="w-16 h-16 relative rounded-full overflow-hidden shrink-0 shadow-lg">
                     <Image
                       src="/logo.webp"
                       alt="আরিফুল ইসলাম"
@@ -68,7 +68,7 @@ export default function Books() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {books.map((book) => (
                   <div key={book.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <div className="aspect-[3/4] relative">
+                    <div className="aspect-3/4 relative">
                       {book.cover ? (
                         <Image
                           src={book.cover}
@@ -77,7 +77,7 @@ export default function Books() {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                        <div className="w-full h-full bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                           <div className="text-center p-6">
                             <svg className="w-20 h-20 mx-auto mb-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
@@ -87,7 +87,7 @@ export default function Books() {
                         </div>
                       )}
                       {/* Book Title Overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                      <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-4">
                         <h3 className="text-white font-bold text-lg line-clamp-2">{book.title}</h3>
                       </div>
                     </div>
@@ -172,7 +172,7 @@ export default function Books() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 bg-gradient-to-br from-primary to-secondary text-white">
+        <section className="py-20 bg-linear-to-br from-primary to-secondary text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">আরও বই আসছে শীঘ্রই</h2>
